@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 20150622035432) do
     t.integer  "user_id"
     t.string   "post_type"
     t.boolean  "external",            default: false
+    t.string   "external_image_url"
     t.string   "external_author"
     t.string   "external_author_url"
   end

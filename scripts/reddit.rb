@@ -13,7 +13,7 @@ last_updated = last_update.value
   next if data['data']['preview'].nil?
   break if last_updated >= data['data']['created']
 
-  p.remote_image_url = data['data']['preview']['images'][0]['source']['url']
+  p.external_image_url = data['data']['preview']['images'][0]['source']['url']
   p.title = data['data']['title']
   p.url = data['data']['url']
   p.created_at = data['data']['created']
