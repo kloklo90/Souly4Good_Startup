@@ -56,3 +56,18 @@
 		}
 	}
 }
+.grid-item { width: 300px; }
+.grid-item--width2 { width: 400px; }
+.navbar-inner {
+  background: rgb(171, 20, 171);
+}
+.navbar-default .navbar-nav > li > a {
+  color: #fff;
+}
+
+@media (min-width: 1200px){
+.container {
+  width: 1243px;
+}
+
+}
