@@ -21,3 +21,4 @@ gem 'sidekiq'
 gem 'clockwork'
 gem 'pg'
 gem 'rails_12factor', group: :production
+gem "mini_magick"

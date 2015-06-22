@@ -6,7 +6,7 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
+     @posts = Post.order(created_at: :desc).all
   end
 
   # GET /posts/1
@@ -27,6 +27,7 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     @post = current_user.posts.build(post_params)
+    @post.post_type = Post::PTYPE[:user]
 
     respond_to do |format|
       if @post.save
