@@ -1,8 +1,4 @@
 require 'sidekiq'
-require 'benchmark'
-require 'json'
-require 'date'
-require 'pony'
 require 'open-uri'
 require 'logger'
 
