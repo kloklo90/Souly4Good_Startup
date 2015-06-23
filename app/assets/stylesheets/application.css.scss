@@ -17,15 +17,15 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
-#logo {
-	font-size: 26px;
-	font-weight: 700;
-	text-transform: uppercase;
-	letter-spacing: -1px;
-	padding: 15px 0;
-	a {
-		color: #2F363E;
-	}
+body{
+	 padding-top: 70px;
+}
+
+#logo img{
+  width: 85px;
+  z-index: 9999;
+  position: relative;
+  left: -124px;
 }
 
 #main_content {

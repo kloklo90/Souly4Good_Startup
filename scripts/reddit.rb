@@ -16,11 +16,13 @@ last_updated = last_update.value
   p.external_image_url = data['data']['preview']['images'][0]['source']['url']
   p.title = data['data']['title']
   p.url = data['data']['url']
-  p.created_at = data['data']['created']
+  p.created_at = Time.zone.at data['data']['created_utc']
   p.post_type = Post::PTYPE[:reddit]
+  p.external_author = data['data']['author']
+  p.external_author_url = "http://www.reddit.com/user/#{data['data']['author']}"
   p.external = true
   p.save
-  puts "Asda"
+  puts "feed"
 
 end
 last_update.value = @last_feed_time

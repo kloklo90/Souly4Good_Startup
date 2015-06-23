@@ -62,7 +62,7 @@ $('.grid').masonry({
 <div class="ui cards">
 <% @posts.each do |post| %>
   <% if post.external %>
-          <div class="card">
+          <div class="card card-<%= post.post_type %>">
               <a class="image" href="<%= url_for post.url %>" target="_blank">
                 <%= image_tag post.external_image_url %>
               </a>
@@ -90,7 +90,7 @@ $('.grid').masonry({
               </div>
             </div>
   <% else %>
-          <div class="card">
+          <div class="card card-<%= post.post_type %>">
               <a class="image" href="<%= url_for post.url %>" target="_blank">
                 <%= image_tag post.image %>
               </a>
