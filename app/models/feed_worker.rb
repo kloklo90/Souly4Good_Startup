@@ -1,7 +1,8 @@
 require 'sidekiq'
 require 'open-uri'
 require 'logger'
-
+require './config/boot'
+require './config/environment'
 
 # If your client is single-threaded, we just need a single connection in our Redis connection pool
 Sidekiq.configure_client do |config|

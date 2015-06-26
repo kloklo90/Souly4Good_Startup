@@ -1,12 +1,13 @@
 require 'rubygems'
 require 'clockwork'
-require './config/boot'
-require './config/environment'
+load "./app/models/feed_worker.rb"
 
-include Clockwork
+module Clockwork
 
-handler do |job|
-  # do something
+	handler do |job|
+	  # do something
+	end
+
+	every(5.hours, 'reddit feed') { FeedWorker.perform_async() }
+
 end
-
-every(5.hours, 'job_name')
