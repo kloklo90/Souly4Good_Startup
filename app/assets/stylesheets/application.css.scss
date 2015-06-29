@@ -26,10 +26,9 @@ body{
 }
 
 #logo img{
-  width: 85px;
   z-index: 9999;
   position: relative;
-  left: -124px;
+  top: -10px;
 }
 
 #main_content {
@@ -63,10 +62,14 @@ body{
 .grid-item { width: 300px; }
 .grid-item--width2 { width: 400px; }
 .navbar-inner {
-  background: rgb(171, 20, 171);
+  background: #f1f1f1;
+}
+#logo a{
+	color: #ab14ab;
+	text-decoration: none;
 }
 .navbar-default .navbar-nav > li > a {
-  color: #fff;
+  color: #000;
 }
 
 $purple: #ab14ab;
@@ -117,6 +120,7 @@ $blue: rgb(97, 150, 182);
 }
 
 #post-legend{
+	margin-bottom: 10px;
 	.icon{
 		width: 40px;
 	  	height: 40px;

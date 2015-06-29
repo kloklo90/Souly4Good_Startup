@@ -4,16 +4,17 @@
   <title>Souly4Good</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+  <link rel="shortcut icon" href="<%= image_url "fav.ico" %>">
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 	<header class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="navbar-inner">
-      <div class="container">
+      <div class=" center-block">
         <div id="logo" class="navbar-brand">
         <%= link_to root_path do %>
-        	<%= image_tag "crane.jpg" %>
+        	<%= image_tag "logo.png" %> Souly4Good
         <% end %></div>
         <nav class="collapse navbar-collapse navbar-ex1-collapse">
         	<% if user_signed_in? -%>
