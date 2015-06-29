@@ -19,6 +19,10 @@
 
 body{
 	 padding-top: 70px;
+	 background: rgb(126, 126, 126);
+	 background-image: -webkit-linear-gradient(top,#FFFFFF,#d2dbdc);
+	 background-image: linear-gradient(to bottom, #FFFFFF, #d2dbdc);
+	 font-family: 'Roboto',sans-serif;
 }
 
 #logo img{
@@ -64,6 +68,88 @@ body{
 .navbar-default .navbar-nav > li > a {
   color: #fff;
 }
+
+$purple: #ab14ab;
+$red: red;
+$blue: rgb(97, 150, 182);
+
+.center-block{
+	
+	max-width: 1035px;
+}
+.ui.cards{
+  	margin: 0px auto;
+    flex-wrap: nowrap;
+
+    .card{
+		width: 250px;
+		margin-bottom: 10px;
+
+		a.user{
+			color: rgb(99, 216, 212)
+		}
+
+		.top-card-info {
+		  padding: 5px;
+		  overflow: auto;
+
+		  .post-icon{
+			  width: 20px;
+			  height: 20px;
+			  border-radius: 10px;
+		  }
+			.external-post{
+				background-color: $red;
+			}
+		  .challenge-post{
+		  	background-color: $purple;
+		  }
+		  .user-post{
+		  	background-color: $blue;
+		  }
+		}
+
+		.description{
+			box-shadow: 0px 3px 0px 0px #d4d4d5, 0px 0px 0px 1px #d4d4d5;
+  			padding: 5px;
+  		}
+	}
+}
+
+#post-legend{
+	.icon{
+		width: 40px;
+	  	height: 40px;
+	  	border-radius: 20px;
+	  	background-color: red;
+		display: inline-block;	
+	}
+	.challenge-t{
+		background-color: $purple;
+	}
+	.user-t{
+		background-color: $blue;
+	}
+	.external-t{
+		background-color: $red;
+	}
+}
+
+
+@media (max-width: 900px){
+	.ui.cards>.card{
+		width: 300px;
+	}
+
+}
+
+@media (max-width: 500px){
+	.ui.cards>.card{
+		width: 100%;
+	}
+
+}
+
 
 @media (min-width: 1200px){
 .container {
