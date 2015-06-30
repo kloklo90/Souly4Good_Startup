@@ -62,7 +62,7 @@ $('.grid').masonry({
   <% if post.external %>
           <div class="card card-<%= post.post_type %>">
               <div class="top-card-info">
-                <div class="post-icon external-post pull-left"></div>
+                <div class="post-icon <%= post.post_type %>-post pull-left"></div>
                 <div class="pull-right"><%= time_ago_in_words(post.created_at) %> ago</div>
               </div>
               <a class="image" href="<%= url_for post.url %>" target="_blank">
@@ -86,7 +86,7 @@ $('.grid').masonry({
   <% else %>
           <div class="card card-<%= post.post_type %>">
               <div class="top-card-info">
-                <div class="post-icon external-post pull-left"></div>
+                <div class="post-icon <%= post.post_type %>-post pull-left"></div>
                 <div class="pull-right"><%= time_ago_in_words(post.created_at) %> ago</div>
               </div>
               <a class="image" href="<%= url_for post.url %>" target="_blank">

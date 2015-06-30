@@ -27,7 +27,7 @@ class PostsController < ApplicationController
   # POST /posts.json
   def create
     @post = current_user.posts.build(post_params)
-    @post.post_type = Post::PTYPE[:user]
+    @post.admin = true if current_user.admin?
 
     respond_to do |format|
       if @post.save
@@ -89,6 +89,6 @@ class PostsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:id, :title, :url, :description, :image)
+      params.require(:post).permit(:id, :title, :url, :description, :image, :expiry_date, :post_type)
     end
 end

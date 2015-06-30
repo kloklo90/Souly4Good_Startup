@@ -107,7 +107,7 @@ $blue: rgb(97, 150, 182);
 		  .challenge-post{
 		  	background-color: $purple;
 		  }
-		  .user-post{
+		  .regular-post{
 		  	background-color: $blue;
 		  }
 		}
@@ -119,7 +119,7 @@ $blue: rgb(97, 150, 182);
 	}
 }
 
-#post-legend{
+#post-legend, .create-post{
 	margin-bottom: 10px;
 	.icon{
 		width: 40px;
@@ -136,6 +136,14 @@ $blue: rgb(97, 150, 182);
 	}
 	.external-t{
 		background-color: $red;
+	}
+}
+
+.create-post{
+	
+	span{
+		vertical-align: middle;
+  		margin-right: 13px;
 	}
 }
 

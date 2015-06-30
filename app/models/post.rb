@@ -1,5 +1,5 @@
 class Post < ActiveRecord::Base
-	PTYPE = {reddit: 'reddit', user: 'user', challenge: 'challenge'}
+	PTYPE = {external: 'external', user: 'regular', challenge: 'challenge'}
 	acts_as_votable
 	belongs_to :user
 	has_many :comments

@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   devise_for :users
 
   get "profile/:user_id" => "users#profile"
+
   resources :posts do
     member do
       put "like", to:    "posts#upvote"
@@ -11,6 +12,7 @@ Rails.application.routes.draw do
     end
     resources :comments
   end
+  get "parse_url" => "posts#parse_url"
   root "posts#index"
 
   # The priority is based upon order of creation: first created -> highest priority.

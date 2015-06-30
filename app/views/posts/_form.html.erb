@@ -1,34 +1,112 @@
-<%= form_for(@post) do |f| %>
-  <% if @post.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+<div id="create_post">
 
-      <ul>
-      <% @post.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs create-post" role="tablist">
+    <li role="presentation" class="active"><a href="#post" aria-controls="post" role="tab" data-toggle="tab">
+    <span class="user-t icon"></span>Submit Post</a></li>
+    <li role="presentation"><a href="#challenge" aria-controls="challenge" role="tab" data-toggle="tab">
+    <span class="challenge-t icon"></span>Submit Challenge</a></li>
+    <li role="presentation"><a href="#external" aria-controls="external" role="tab" data-toggle="tab">
+    <span class="external-t icon"></span>Submit external post</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+<div class="tab-content">
+  <div role="tabpanel" class="tab-pane fade in active" id="post">
+    <h2>Submit Regular Post</h2>
+    <%= simple_form_for(@post) do |f| %>
+    <% if @post.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+        <ul>
+        <% @post.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= f.label :title %><br>
+      <%= f.text_field :title, class: "form-control" %>
     </div>
+    <div class="form-group">
+      <%= f.label :url %><br>
+      <%= f.text_field :url, class: "form-control", placeholder: "http://" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :description %><br>
+      <%= f.text_area :description, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.file_field :image, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.input :post_type, as: :hidden , input_html: { value: Post::PTYPE[:user] } %>
+    </div>
+    <br>
+    <div class="form-group">
+      <%= f.submit "Submit", class: "btn btn-lg btn-primary" %>
+    </div>
+
   <% end %>
-
-  <div class="form-group">
-    <%= f.label :title %><br>
-    <%= f.text_field :title, class: "form-control" %>
-  </div>
-  <div class="form-group">
-    <%= f.label :url %><br>
-    <%= f.text_field :url, class: "form-control", placeholder: "http://" %>
-  </div>
-  <div class="form-group">
-    <%= f.label :description %><br>
-    <%= f.text_area :description, class: "form-control" %>
-  </div>
-  <div class="form-group">
-    <%= f.file_field :image, class: "form-control" %>
-  </div>
-  <br>
-  <div class="form-group">
-    <%= f.submit "Submit", class: "btn btn-lg btn-primary" %>
   </div>
 
-<% end %>
+  <!-- CHallenge #####################################-->
+  <div role="tabpanel" class="tab-pane fade" id="challenge">
+    <h2>Submit Challenge</h2>
+    <%= simple_form_for(@post) do |f| %>
+    <% if @post.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+        <ul>
+        <% @post.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-group">
+      <%= f.label :title %><br>
+      <%= f.text_field :title, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :url %><br>
+      <%= f.text_field :url, class: "form-control", placeholder: "http://" %>
+    </div>
+    <div class="form-group">
+      <%= f.label :description %><br>
+      <%= f.text_area :description, class: "form-control" %>
+    </div>
+    <% if current_user.admin? %>
+      <div class="form-group">
+        <%= f.input :expiry_date %>
+      </div>  
+    <% end %>  
+    <div class="form-group">
+      <%= f.file_field :image, class: "form-control" %>
+    </div>
+    <div class="form-group">
+      <%= f.input :post_type, as: :hidden, input_html: { value: Post::PTYPE[:challenge] } %>
+    </div>
+    <br>
+    <div class="form-group">
+      <%= f.submit "Submit", class: "btn btn-lg btn-primary" %>
+    </div>
+
+  <% end %>
+  </div>
+
+  <!-- EXternal #####################################-->
+  <div role="tabpanel" class="tab-pane fade" id="external">
+    <h2>Submit External Post</h2>
+  </div>
+
+
+</div>
+
+</div>
+
