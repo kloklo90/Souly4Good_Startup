@@ -83,7 +83,8 @@
     </div>
     <% if current_user.admin? %>
       <div class="form-group">
-        <%= f.input :expiry_date %>
+        <%= f.label :expiry_date %><br>
+        <%= f.input_field :expiry_date, as: "string", class: "datetimepicker form-control" %>
       </div>  
     <% end %>  
     <div class="form-group">

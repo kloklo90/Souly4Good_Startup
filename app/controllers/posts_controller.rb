@@ -6,7 +6,14 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-     @posts = Post.order(created_at: :desc).all
+    limit = params[:page] || 1 
+    @posts = Post.order(created_at: :desc).page limit
+
+    respond_to do |format|
+      format.html { 
+        render layout: nil, action: "_post_list" if params[:page].present?
+      }
+    end
   end
 
   # GET /posts/1

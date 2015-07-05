@@ -6,73 +6,16 @@
 </div>
 
 <% if false %>
-<div class="grid">
-<% @posts.each do |post| %>
-  <% if post.external %>
+          <div class="grid">
+          <% @posts.each do |post| %>
+            <% if post.external %>
 
-    <div class="grid-item well link row clearfix">
-      <h2>
-        <%= link_to post.title, post.url, target: "blank" %><br>
-        <%= image_tag post.external_image_url, width: "100%" %><br>
-      </h2>
+              <div class="grid-item well link row clearfix">
+                <h2>
+                  <%= link_to post.title, post.url, target: "blank" %><br>
+                  <%= image_tag post.external_image_url, width: "100%" %><br>
+                </h2>
 
-      <div class="btn-group">
-        <a class="btn btn-default btn-sm"  target="_blank" href="<%= post.url %>">Visit Post</a>
-        <%= link_to like_post_path(post), method: :put, class: "btn btn-default btn-sm" do %>
-          <span class="glyphicon glyphicon-chevron-up"></span>
-          Upvote
-          <%= post.get_upvotes.size %>
-        <% end %>
-      </div>
-    </div>
-
-  <% else %>
-    <div class="grid-item link row clearfix">
-      <h2>
-        <%= link_to post.title, post %><br>
-        <%= image_tag post.image, width: "450" %><br>
-        <small class="author">Submitted <%= time_ago_in_words(post.created_at) %> by <%= post.user.name %></small>
-      </h2>
-
-      <div class="btn-group">
-        <a class="btn btn-default btn-sm"  target="_blank" href="<%= post.url %>">Visit Post</a>
-        <%= link_to like_post_path(post), method: :put, class: "btn btn-default btn-sm" do %>
-          <span class="glyphicon glyphicon-chevron-up"></span>
-          Upvote
-          <%= post.get_upvotes.size %>
-        <% end %>
-      </div>
-    </div>
-  <% end %>
-<% end %>
-</div>
-
-<script>
-$('.grid').masonry({
-  // options
-  itemSelector: '.grid-item',
-  columnWidth: 300,
-  gutter: 10
-});
-</script>
-<% end %>
-
-<div class="ui cards" id="con">
-<% @posts.each do |post| %>
-  <% if post.external %>
-          <div class="card card-<%= post.post_type %>">
-              <div class="top-card-info">
-                <div class="post-icon <%= post.post_type %>-post pull-left"></div>
-                <div class="pull-right"><%= time_ago_in_words(post.created_at) %> ago</div>
-              </div>
-              <a class="image" href="<%= url_for post.url %>" target="_blank">
-                <%= image_tag post.external_image_url %>
-              </a>
-              <div class="content">
-                <%= link_to post.external_author, post.external_author_url, target: "blank", class: "user" %><br />
-                <%= post.title %>
-              </div>
-              <div class="description">
                 <div class="btn-group">
                   <a class="btn btn-default btn-sm"  target="_blank" href="<%= post.url %>">Visit Post</a>
                   <%= link_to like_post_path(post), method: :put, class: "btn btn-default btn-sm" do %>
@@ -82,48 +25,50 @@ $('.grid').masonry({
                   <% end %>
                 </div>
               </div>
-            </div>
-  <% else %>
-          <div class="card card-<%= post.post_type %>">
-              <div class="top-card-info">
-                <div class="post-icon <%= post.post_type %>-post pull-left"></div>
-                <div class="pull-right"><%= time_ago_in_words(post.created_at) %> ago</div>
-              </div>
-              <a class="image" href="<%= url_for post.url %>" target="_blank">
-                <%= image_tag post.image %>
-              </a>
-              <div class="content">
-                <%= post.user.name %><br />
-                <%= post.title %>
-              </div>
-                <div class="description">
-                  <div class="btn-group">
-                    <a class="btn btn-default btn-sm"  target="_blank" href="<%= post.url %>">Visit Post</a>
-                    <%= link_to like_post_path(post), method: :put, class: "btn btn-default btn-sm" do %>
-                      <span class="glyphicon glyphicon-chevron-up"></span>
-                      Upvote
-                      <%= post.get_upvotes.size %>
-                    <% end %>
-                  </div>
+
+            <% else %>
+              <div class="grid-item link row clearfix">
+                <h2>
+                  <%= link_to post.title, post %><br>
+                  <%= image_tag post.image, width: "450" %><br>
+                  <small class="author">Submitted <%= time_ago_in_words(post.created_at) %> by <%= post.user.name %></small>
+                </h2>
+
+                <div class="btn-group">
+                  <a class="btn btn-default btn-sm"  target="_blank" href="<%= post.url %>">Visit Post</a>
+                  <%= link_to like_post_path(post), method: :put, class: "btn btn-default btn-sm" do %>
+                    <span class="glyphicon glyphicon-chevron-up"></span>
+                    Upvote
+                    <%= post.get_upvotes.size %>
+                  <% end %>
                 </div>
-            </div>
-  <% end %>
+              </div>
+            <% end %>
+          <% end %>
+          </div>
+
+          <script>
+          $('.grid').masonry({
+            // options
+            itemSelector: '.grid-item',
+            columnWidth: 300,
+            gutter: 10
+          });
+          </script>
 <% end %>
-<script>
-$(document).ready(function(){
-  var $container = $('#con');
-  $container.masonry({
-    // options
-    itemSelector: '.card',
-    columnWidth: '.card',
-    gutter: 10
-  }); 
-  $container.imagesLoaded( function(){
-       $container.masonry()
-  });
 
-  $('[data-toggle="tooltip"]').tooltip()
-})
+<div class="ui cards" id="con">
 
-</script>
+  <%= render 'post_list' %>
+
+  <script>
+  $(document).ready(function(){
+    var _postmodel = new PostsModel();
+    _postmodel.init();
+  })
+  </script>
+</div>
+
+<div class="hide">
+  <%= paginate @posts %>
 </div>
