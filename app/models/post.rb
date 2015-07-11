@@ -8,4 +8,8 @@ class Post < ActiveRecord::Base
 	validates :title, presence: true
 
 	paginates_per 8
+
+	def external_image
+		external_image_url || image
+	end
 end
