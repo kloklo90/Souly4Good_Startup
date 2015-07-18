@@ -30,3 +30,7 @@ gem 'jquery-turbolinks'
 gem 'kaminari'
 
 gem "font-awesome-rails"
+
+group :development do
+  gem "better_errors"
+end
