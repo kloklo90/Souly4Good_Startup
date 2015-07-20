@@ -1,0 +1,17 @@
+development:
+  adapter: postgresql
+  encoding: utf8
+  database: d26cmbuqrqtu8u
+  username: wciknhukyvuanq
+  password: HP4BoTQEXuErmcbrpCQ9VK1LaM
+  pool: 5
+  host: ec2-54-227-247-161.compute-1.amazonaws.com
+
+test:
+  adapter: postgresql
+  encoding: utf8
+  database: souly_test
+  username: samsonkirk-koffi
+  password: abc123abc
+  pool: 5
+  host: localhost 
