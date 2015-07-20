@@ -8,4 +8,16 @@ class User < ActiveRecord::Base
   has_one :progress
   after_create :create_progress
 
+  def getProgress
+  	if self.progress 
+  		return self.progress 
+  	else
+  		create_progress
+  		
+  	end
+  	
+  	return self.progress 
+  	
+  end
+
 end

@@ -1,19 +1,21 @@
 <h2 id="profile_header">Edit <%= resource_name.to_s.humanize %></h2>
+
+
 <div id="progressbar">
     <span class="progress_widget">
           <p>Progress to Next Level:</p>
 
           <!-- Calculate Progress as a percentage -->
           <!-- levelRange is a public class method to return @@level_point -->
-          <span id="progress_level"><%= (current_user.progress.current_value.to_f / current_user.progress.levelRange.to_f) * 100%>%  </span>
+          <span id="progress_level"><%= (current_user.getProgress.current_value.to_f / current_user.getProgress.levelRange.to_f) * 100%>%  </span>
       </span>
       
       <span class="progress_widget">
       <p>  Current Level: </p>
       <!-- Using class method to return name -->
-      <span id="progress_name"><%= Level.getLevel(current_user.progress.level_key)%></span>
+      <span id="progress_name"><%= Level.getLevel(current_user.getProgress.level_key)%></span>
       </span>
-     </div>
+</div>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= devise_error_messages! %>
