@@ -30,6 +30,7 @@ gem 'jquery-turbolinks'
 gem 'kaminari'
 
 gem "font-awesome-rails"
+gem "nokogiri"
 
-gem "better_errors"
-gem "binding_of_caller"
+gem "better_errors",        group: :development
+gem "binding_of_caller",        group: :development

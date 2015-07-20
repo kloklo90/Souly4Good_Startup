@@ -9,7 +9,11 @@
                 <%= image_tag post.external_image %>
               </a>
               <div class="content">
-                <%= link_to post.external_author, post.external_author_url, target: "blank", class: "user" %><br />
+                <% if post.external_author_url %>
+                  <%= link_to post.external_author, post.external_author_url, target: "blank", class: "user" %><br />
+                <% else %>
+                  <%= post.external_author %> <br />
+                <% end %>
                 <%= post.title %>
               </div>
               <div class="description">
