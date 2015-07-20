@@ -13,9 +13,7 @@ class User < ActiveRecord::Base
   		return self.progress 
   	else
   		create_progress
-  		
   	end
-  	
   	return self.progress 
   	
   end
