@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Level key:</strong>
+  <%= @progress.level_key %>
+</p>
+
+<p>
+  <strong>Current value:</strong>
+  <%= @progress.current_value %>
+</p>
+
+<p>
+  <strong>Users:</strong>
+  <%= @progress.users %>
+</p>
+
+<%= link_to 'Edit', edit_progress_path(@progress) %> |
+<%= link_to 'Back', progresses_path %>

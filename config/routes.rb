@@ -1,7 +1,17 @@
 Rails.application.routes.draw do
+  resources :levels
+
+  resources :progresses
+
   resources :comments
 
-  devise_for :users
+  devise_for :users, :controllers => { :invitations => 'users/invitations' }
+
+  devise_scope :user do
+    post 'batch_invite', to: "users/invitations#batch_invite"
+  end
+  
+
 
   get "profile/:user_id" => "users#profile"
 

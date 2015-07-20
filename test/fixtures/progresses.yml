@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  level_key: 1
+  current_value: 1
+  users_id: 
+
+two:
+  level_key: 1
+  current_value: 1
+  users_id: 

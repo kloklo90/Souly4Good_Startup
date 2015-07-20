@@ -1,12 +1,67 @@
 $(document).ready(function(){
 	//create post page
+
 	if($('#create_post').length > 0)
 	{
 
 	}
 
 	$('.datetimepicker').datetimepicker();
+
+
+	//Add Friends widget
+	$("#add_friend_btn").click(function(e) {
+			e.preventDefault();
+			// show submit button
+			$('#submit_friend_btn').show();
+
+		$("#friend_list").append( "<span class='friend_input_wrapper'> <input class='friend_email_input form_control' name='user_emails[]' placeholder=\"Enter your buddy's email \"/> <a class='friend_cancel'>X</a></span> " );
+		
+		//Unbind previous click event
+		$(".friend_input_wrapper > .friend_cancel ").off('click');
+
+		//Bind click event
+		$(".friend_input_wrapper > .friend_cancel ").on('click',function(e){
+			$(this).parent( ".friend_input_wrapper" ).remove();
+		});
+
+	});
+
+	
+
+	$('#submit_friend_btn').click(function(e) {
+		// ajax call to send invitations
+		var user_emails = [];
+		$('.friend_email_input').each(function(element){
+			if ($( this ).val() != "") {
+				user_emails.unshift($( this ).val());	
+			};
+			
+
+		});
+		
+		if (user_emails.length > 0 ) {
+			$.ajax({
+			  type: "POST",
+			  url: "/batch_invite",
+			  data: { user_emails : user_emails},
+			  success: function  (res) {
+			  	// Update dom elements to current values
+			  	$("#friend_list").html("<p>Invite successful</p>");
+			  	$("#progress_level").html(res.progess_level+"%");
+			  	$("#progress_name").html(res.progess_name);
+
+
+			  }
+			});
+		};
+		
+	});
+
 })
+
+
+
 
 
 var PostsModel = function() {

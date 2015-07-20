@@ -1,4 +1,19 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<h2 id="profile_header">Edit <%= resource_name.to_s.humanize %></h2>
+<div id="progressbar">
+    <span class="progress_widget">
+          <p>Progress to Next Level:</p>
+
+          <!-- Calculate Progress as a percentage -->
+          <!-- levelRange is a public class method to return @@level_point -->
+          <span id="progress_level"><%= (current_user.progress.current_value.to_f / current_user.progress.levelRange.to_f) * 100%>%  </span>
+      </span>
+      
+      <span class="progress_widget">
+      <p>  Current Level: </p>
+      <!-- Using class method to return name -->
+      <span id="progress_name"><%= Level.getLevel(current_user.progress.level_key)%></span>
+      </span>
+     </div>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= devise_error_messages! %>
@@ -36,10 +51,29 @@
 
     <% end %>
   </div>
+
+
+  <div class="panel-footer">
+
+     
+
+     <h3>Invite Your Friends</h3>
+     <a  class="btn btn-default" id="add_friend_btn">Add a friend</a>
+
+     <a  class="btn btn-default" id="submit_friend_btn">Submit</a>
+
+     <div id="friend_list"></div>
+
+  </div>
+
+
   <div class="panel-footer">
 
     <h3>Cancel my account</h3>
 
     <p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-default" %></p>
 
+
+
   </div>
+

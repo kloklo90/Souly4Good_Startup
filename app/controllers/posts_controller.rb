@@ -36,6 +36,16 @@ class PostsController < ApplicationController
     @post = current_user.posts.build(post_params)
     @post.admin = true if current_user.admin?
 
+    @progess = Progress.where(user_id: current_user).first
+
+    if not (@progess)
+      Progress.create(user_id: current_user.id)
+      @progess = Progress.where(user_id: current_user).first
+    end
+
+    @progess.increment(Progress.get_progress_val(post_params[:post_type]))
+    @progess.save
+
     respond_to do |format|
       if @post.save
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
