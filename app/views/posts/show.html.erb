@@ -4,6 +4,9 @@
     <%= @post.description %>
   </p>
   <p>
+    <%= link_to @post.url, @post.url %>
+  </p>
+  <p>
     <%= image_tag @post.image, width: "450" %>
   </p><small>Submitted by <%= @post.user.name %></small></h1>
 </div>
@@ -29,6 +32,9 @@
 	<div class="btn-group">
 		<%= link_to 'Edit', edit_post_path(@post), class: "btn btn-default" %>
 		<%= link_to 'Destroy', @post, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default" %>
+    <% if @post.post_type == Post::PTYPE[:challenge] %>
+      <%= link_to "Reply Challenge", reply_post_path(@post), class: "btn btn-default" %>
+    <% end %>
 	</div>
 <% end %>
 
@@ -45,4 +51,13 @@
   </div>
   <br>
   <%= f.submit "Add Comment", class: "btn btn-primary" %>
+<% end %>
+
+<% if not @post.replies.empty? %>
+  <h2>Challenge Replies</h2>
+  <% @post.replies.each do |reply| %>
+    <%= link_to reply do %>
+      Reply by <%= reply.user.name %> <%= time_ago_in_words(reply.created_at) %> ago <br />
+    <% end %>
+  <% end %>
 <% end %>

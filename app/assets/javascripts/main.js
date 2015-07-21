@@ -6,7 +6,9 @@ $(document).ready(function(){
 
 	}
 
-	$('.datetimepicker').datetimepicker();
+	$('.datetimepicker').datetimepicker({
+		format: 'dddd, MMMM Do YYYY, H:mm:ss ZZ'
+	});
 
 
 	//Add Friends widget
@@ -109,7 +111,7 @@ var PostsModel = function() {
 	this.init = function( opts ){
 
 		//self.$grid = $('#con');
-	    window.a = self.$grid = $('#con').masonry({
+	    self.$grid = $('#con').masonry({
 	      // options
 	      itemSelector: '.card',
 	      columnWidth: '.card',

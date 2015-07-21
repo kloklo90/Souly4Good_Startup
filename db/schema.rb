@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150719230202) do
+ActiveRecord::Schema.define(version: 20150721112718) do
 
   create_table "comments", force: true do |t|
     t.integer  "post_id"
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 20150719230202) do
     t.string   "external_author_url"
     t.datetime "expiry_date"
     t.boolean  "admin",               default: false
+    t.integer  "post_id"
   end
 
   add_index "posts", ["post_type"], name: "index_posts_on_post_type"

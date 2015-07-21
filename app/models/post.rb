@@ -5,6 +5,9 @@ class Post < ActiveRecord::Base
 	has_many :comments
 	mount_uploader :image, ImageUploader
 
+	has_many :replies, -> { order "created_at desc" } , class_name: "Post", foreign_key: "post_id"
+	belongs_to :parent, class_name: "Post", foreign_key: "post_id"
+
 	validates :title, presence: true
 
 	paginates_per 8
