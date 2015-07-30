@@ -20,22 +20,19 @@
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= devise_error_messages! %>
 
-    <div class="panel-footer">
 
-     
+  <div class="panel panel-default">
 
-     <h3>Invite Your Friends</h3>
+    <div class="panel-body">
+
+<h3>Invite Your Friends</h3>
      <a  class="btn btn-default" id="add_friend_btn">Add a friend</a>
 
      <a  class="btn btn-default" id="submit_friend_btn">Submit</a>
 
      <div id="friend_list"></div>
 
-  </div>
-
-  <div class="panel panel-default">
-    <div class="panel-body">
-
+     
       <div class="form-inputs">
 
       <div class="form-group">
