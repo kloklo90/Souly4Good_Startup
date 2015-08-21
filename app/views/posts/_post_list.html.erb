@@ -5,7 +5,8 @@
                 <div class="post-icon <%= post.post_type %>-post pull-left"></div>
                 <div class="pull-right"><%= time_ago_in_words(post.created_at) %> ago</div>
               </div>
-              <a class="image" href="<%= url_for post.url %>" target="_blank">
+              <!--a class="image" href="<%= url_for post.url %>" target="_blank"-->
+              <a class="image" href="<%= post_path post %>">
                 <%= image_tag post.external_image %>
               </a>
               <div class="content">

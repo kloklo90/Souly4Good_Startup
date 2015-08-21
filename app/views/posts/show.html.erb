@@ -8,7 +8,11 @@
   </p>
   <p>
     <%= image_tag @post.image, width: "450" %>
-  </p><small>Submitted by <%= @post.user.name %></small></h1>
+  </p>
+  <% if @post.user.present? %>
+  <small>Submitted by <%= @post.user.name %></small>
+  <% end %>
+  </h1>
 </div>
 
 <div class="btn-group">
