@@ -18,4 +18,8 @@ class User < ActiveRecord::Base
   	
   end
 
+  def friendly_name
+    self.email.split("@").first
+  end
+
 end

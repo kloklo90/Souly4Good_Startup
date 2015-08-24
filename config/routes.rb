@@ -20,6 +20,7 @@ Rails.application.routes.draw do
       put "like", to:    "posts#upvote"
       put "dislike", to: "posts#downvote"
       get "reply", to: "posts#new"
+      post "report", to: "posts#report"
     end
     resources :comments
   end

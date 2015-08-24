@@ -33,6 +33,10 @@ body{
   top: -10px;
 }
 
+.navbar-brand a:hover, .navbar-brand a:focus, .navbar-brand a:active{
+    
+}
+
 #main_content {
 	#content {
 		float: none;
@@ -170,4 +174,7 @@ $blue: rgb(97, 150, 182);
   width: 1243px;
 }
 
+}
+.no-hover-style:hover {
+    background-color:transparent;
 }

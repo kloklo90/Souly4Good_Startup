@@ -1,5 +1,5 @@
 class PostsController < ApplicationController
-  before_action :set_post, only: [:show, :edit, :update, :destroy]
+  before_action :set_post, only: [:show, :edit, :update, :destroy, :report]
   before_action :authenticate_user!, except: [:index, :show]
   before_action :authorized_user, only: [:edit, :update, :destroy]
 
@@ -7,8 +7,15 @@ class PostsController < ApplicationController
   # GET /posts.json
   def index
     limit = params[:page] || 1 
-    @posts = Post.order(created_at: :desc).page limit
-
+    if params[:type].present? and params[:type] == 'challenge'
+      @posts = Post.where(post_type: 'challenge').order(created_at: :desc).page limit
+    elsif params[:type].present? and params[:type] == 'regular'
+      @posts = Post.where(post_type: 'regular').order(created_at: :desc).page limit
+    elsif params[:type].present? and params[:type] == 'external'
+      @posts = Post.where(post_type: 'external').order(created_at: :desc).page limit
+    else
+      @posts = Post.order(created_at: :desc).page limit
+    end
     respond_to do |format|
       format.html { 
         render layout: nil, action: "_post_list" if params[:page].present?
@@ -82,10 +89,32 @@ class PostsController < ApplicationController
     end
   end
 
+  def report
+    redirect_to root_path, alert: "Post not found" and return if @post.blank?
+    if session[:report_posts].present? and !session[:report_posts].include?(@post.id)
+      session[:report_posts] = [@post.id]
+      ReportMailer.report_post(@post, current_user).deliver
+    else
+      if session[:report_posts].blank?
+        session[:report_posts] = [@post.id]
+        ReportMailer.report_post(@post, current_user).deliver
+      end
+    end
+    redirect_to root_path, alert: "Post reported successfully!"
+  end
+
   def upvote
     @post = Post.find(params[:id])
     @post.upvote_by current_user
-    redirect_to :back
+    if request.xhr?
+      respond_to do |format|
+        format.js
+      end
+      # respond to Ajax request
+    else
+      redirect_to :back
+    end
+    
   end
 
   def downvote
@@ -95,18 +124,22 @@ class PostsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_post
-      @post = Post.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_post
+    @post = Post.find(params[:id])
+  end
 
-    def authorized_user
+  def authorized_user
+    if ( current_user and current_user.admin? )
+      @post = Post.find_by(id: params[:id])
+    else
       @post = current_user.posts.find_by(id: params[:id])
-      redirect_to posts_path, notice: "Not authorized to edit this post" if @post.nil?
     end
+    redirect_to posts_path, notice: "Not authorized to edit this post" if @post.nil?
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def post_params
-      params.require(:post).permit(:id, :title, :url, :description, :image, :expiry_date, :post_type, :post_id)
-    end
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def post_params
+    params.require(:post).permit(:id, :title, :url, :description, :image, :expiry_date, :post_type, :post_id)
+  end
 end

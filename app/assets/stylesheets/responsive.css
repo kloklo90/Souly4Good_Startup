@@ -1,0 +1,25 @@
+/* ----------- iPhone, Android ----------- */
+
+
+@media only screen and (min-device-width: 320px) and (max-device-width: 500px){
+    .ui.cards>.card{
+		width: 100% !important;
+	}
+}
+
+@media only screen and (min-device-width: 320px) and (max-device-height: 568px){
+    .ui.cards>.card{
+		width: 100% !important;
+	}
+}
+@media only screen and (min-device-width: 375px) and (max-device-height: 667px) and (-webkit-device-pixel-ratio: 2){
+    .ui.cards>.card{
+		width: 100% !important;
+	}
+}
+@media only screen and (min-device-width: 414px) and (max-device-height: 736px) and (-webkit-device-pixel-ratio: 3){
+    .ui.cards>.card{
+		width: 100% !important;
+	}
+}
+/* ----------- iPhone, Android END ----------- */

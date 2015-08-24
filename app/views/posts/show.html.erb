@@ -1,67 +1,73 @@
 <div class="page-header">
   <h1><a target="_blank" href="<%= @post.url %>"><%= @post.title %></a><br> 
-  <p>
-    <%= @post.description %>
-  </p>
-  <p>
-    <%= link_to @post.url, @post.url %>
-  </p>
-  <p>
-    <%= image_tag @post.image, width: "450" %>
-  </p>
-  <% if @post.user.present? %>
-  <small>Submitted by <%= @post.user.name %></small>
-  <% end %>
+    <p>
+      <%= @post.description %>
+    </p>
+    <p>
+      <%= link_to @post.url, @post.url %>
+    </p>
+    <p>
+      <% if @post.external %>
+        <%= image_tag @post.external_image, style: "max-width: 450px" %>
+      <% else %>
+        <%= image_tag @post.image, width: "450" %>
+      <% end %>
+    </p>
+    <% if @post.user.present? %>
+      <small>Submitted by <%= @post.user.name %></small>
+    <% end %>
   </h1>
 </div>
 
 <div class="btn-group">
-	<%= link_to 'Visit URL', @post.url, class: "btn btn-primary" %>
-</div>
-
-<div class="btn-group pull-right">
-  <%= link_to like_post_path(@post), method: :put, class: "btn btn-default btn-sm" do %>
-    <span class="glyphicon glyphicon-chevron-up"></span>
-    Upvote
-    <%= @post.get_upvotes.size %>
-  <% end %>
-  <%= link_to dislike_post_path(@post), method: :put, class: "btn btn-default btn-sm" do %>
-    <span class="glyphicon glyphicon-chevron-down">
-    Downvote
-    <%= @post.get_downvotes.size %>
-  <% end %>
-</div>
-
-<% if @post.user == current_user -%>
-	<div class="btn-group">
-		<%= link_to 'Edit', edit_post_path(@post), class: "btn btn-default" %>
-		<%= link_to 'Destroy', @post, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default" %>
-    <% if @post.post_type == Post::PTYPE[:challenge] %>
-      <%= link_to "Reply Challenge", reply_post_path(@post), class: "btn btn-default" %>
-    <% end %>
-	</div>
-<% end %>
-
-<h3 class="comments_title">
-  <%= @post.comments.count %> Comments
-</h3>
-
-<div id="comments">
-  <%= render :partial => @post.comments %>
-</div>
-<%= simple_form_for [@post, Comment.new]  do |f| %>
-  <div class="field">
-    <%= f.text_area :body, class: "form-control" %>
+  <%= link_to 'Visit URL', @post.url, class: "btn btn-primary" %>
   </div>
-  <br>
-  <%= f.submit "Add Comment", class: "btn btn-primary" %>
-<% end %>
 
-<% if not @post.replies.empty? %>
-  <h2>Challenge Replies</h2>
-  <% @post.replies.each do |reply| %>
-    <%= link_to reply do %>
-      Reply by <%= reply.user.name %> <%= time_ago_in_words(reply.created_at) %> ago <br />
-    <% end %>
-  <% end %>
-<% end %>
+  <div class="btn-group pull-right">
+    <%= link_to like_post_path(@post), method: :put, class: "btn btn-default btn-sm" do %>
+        <span class="glyphicon glyphicon-chevron-up"></span>
+        Upvote
+        <%= @post.get_upvotes.size %>
+      <% end %>
+      <%= link_to dislike_post_path(@post), method: :put, class: "btn btn-default btn-sm" do %>
+          <span class="glyphicon glyphicon-chevron-down">
+            Downvote
+            <%= @post.get_downvotes.size %>
+          <% end %>
+      </div>
+
+      <% if @post.user == current_user or ( current_user and current_user.admin? ) -%>
+        <div class="btn-group">
+          <%= link_to 'Edit', edit_post_path(@post), class: "btn btn-default" %>
+          <%# if current_user.admin? or @post.user == current_user %>
+            <%= link_to 'Destroy', @post, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default" %>
+            <%# end %>
+              <% if @post.post_type == Post::PTYPE[:challenge] %>
+                <%= link_to "Reply Challenge", reply_post_path(@post), class: "btn btn-default" %>
+                <% end %>
+              </div>
+            <% end %>
+
+            <h3 class="comments_title">
+              <%= @post.comments.count %> Comments
+            </h3>
+
+            <div id="comments">
+              <%= render :partial => @post.comments %>
+            </div>
+            <%= simple_form_for [@post, Comment.new]  do |f| %>
+              <div class="field">
+                <%= f.text_area :body, class: "form-control" %>
+                </div>
+                <br>
+                <%= f.submit "Add Comment", class: "btn btn-primary" %>
+                <% end %>
+
+                <% if not @post.replies.empty? %>
+                  <h2>Challenge Replies</h2>
+                  <% @post.replies.each do |reply| %>
+                    <%= link_to reply do %>
+                      Reply by <%= reply.user.name %> <%= time_ago_in_words(reply.created_at) %> ago <br />
+                    <% end %>
+                  <% end %>
+                <% end %>

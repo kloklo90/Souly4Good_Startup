@@ -1,0 +1,19 @@
+<% if user_signed_in? %>
+  <span id="like_<%= post.id %>">
+    <%= link_to like_post_path(post), method: :put, remote: true, class: "btn btn-default btn-sm" do %>
+        <span class="glyphicon glyphicon-chevron-up"></span>
+        Like
+
+        <%= post.get_upvotes.size %>
+      <% end %>
+    </span>
+  <% else %>
+    <span id="like_<%= post.id %>">
+      <%= link_to like_post_path(post), method: :put, class: "btn btn-default btn-sm" do %>
+          <span class="glyphicon glyphicon-chevron-up"></span>
+          Like
+
+          <%= post.get_upvotes.size %>
+        <% end %>
+      </span>
+    <% end %>

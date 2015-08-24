@@ -1,0 +1,37 @@
+<h1>
+  <%= @user.friendly_name %> has reported post (<%= link_to @post.title, post_url(@post) %>)
+</h1>
+<table>
+  <tr>
+    <th>
+      USER ID:
+    </th>
+    <td>
+      <%= @user.id %>
+    </td>
+  </tr>
+  <tr>
+    <th>
+      USER EMAIL:
+    </th>
+    <td>
+      <%= @user.email %>
+    </td>
+  </tr>
+  <tr>
+    <th>
+      POST ID:
+    </th>
+    <td>
+      <%= @post.id %>
+    </td>
+  </tr>
+  <tr>
+    <th>
+      POST LINK:
+    </th>
+    <td>
+      <%= link_to @post.title, post_url(@post) %>
+    </td>
+  </tr>
+</table>
