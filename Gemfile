@@ -18,7 +18,6 @@ gem 'spring',        group: :development
 gem 'mysql2', group: :development
 gem 'devise_invitable', '~> 1.3.4'
 gem 'carrierwave'
-gem "rmagick"
 gem 'sidekiq'
 gem 'clockwork'
 gem 'pg'
