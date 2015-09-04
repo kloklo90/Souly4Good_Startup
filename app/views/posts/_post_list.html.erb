@@ -6,7 +6,7 @@
         <div class="pull-right"><%= time_ago_in_words(post.created_at) %> ago</div>
       </div>
       <% if post.title.length < 300 %>
-        <a class="image" href="<%= url_for(post) %>" target="_blank">
+        <a class="image" href="<%= url_for(post) %>">
           <%= image_tag post.external_image %>
         </a>
       <% else %>
@@ -16,7 +16,7 @@
       <% end %>
       <div class="content">
         <% if post.external_author_url %>
-          <%= link_to post.external_author, post.external_author_url, target: "blank", class: "user" %><br />
+          <%= link_to post.external_author, post.external_author_url, class: "user" %><br />
           <% else %>
             <%= post.external_author %> <br />
           <% end %>
@@ -25,9 +25,9 @@
         <div class="description">
           <div class="btn-group">
             <span>
-              <a class="btn btn-default btn-sm"  target="_blank" href="<%= url_for(post) %>">Visit Post</a>
+              <a class="btn btn-default btn-sm"  href="<%= url_for(post) %>">Visit Post</a>
             </span>
-            <%= render partial: "upvote", locals: {post: post} %>
+            <%= render partial: "posts/upvote", locals: {post: post} %>
             <span>
               <%= link_to "<i class=\"fa fa-flag\"></i>".html_safe, report_post_path(post), :class => "btn btn-default btn-sm", :style => "color: red;", :method => :post %>
             </span>
@@ -41,31 +41,31 @@
           <div class="pull-right"><%= time_ago_in_words(post.created_at) %> ago</div>
         </div>
         <% if post.title.length < 300 %>
-          <a class="image" href="<%= url_for post %>" target="_blank">
-            <%= image_tag post.image %>
+          <a class="image" href="<%= url_for post %>">
+            <%= image_tag default_i_image(post) %>
           </a>
         <% else %>
-          <div class="content">
+          <div class="content c">
             <%= post.title %>
           </div>
         <% end %>
-        <div class="content">
+        <div class="content c">
           <!--TODO need to add user profile link -->
-          <%= post.user.name %>
+          <%= link_to post.user.name, post.user %>
           <br />
           <%= post.title %>
         </div>
         <div class="description">
           <div class="btn-group">
             <span>
-              <a class="btn btn-default btn-sm"  target="_blank" href="<%= url_for post_path(post) %>">Visit Post</a>
+              <a class="btn btn-default btn-sm" href="<%= url_for post_path(post) %>">Visit Post</a>
             </span>
             <% if post.post_type == Post::PTYPE[:challenge] %>
               <span>
                 <%= link_to "Reply", reply_post_path(post), class: "btn btn-default btn-sm" %>
                 </span>
               <% end %>
-            <%= render partial: "upvote", locals: {post: post} %>
+            <%= render partial: "posts/upvote", locals: {post: post} %>
               <span>
                 <%= link_to "<i class=\"fa fa-flag\"></i>".html_safe, report_post_path(post), :class => "btn btn-default btn-sm", :style => "color: red;", :method => :post %>
               </span>

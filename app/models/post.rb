@@ -15,4 +15,5 @@ class Post < ActiveRecord::Base
 	def external_image
 		external_image_url || image
 	end
+
 end

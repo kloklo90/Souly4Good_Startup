@@ -18,8 +18,20 @@ class User < ActiveRecord::Base
   	
   end
 
+  def full_name
+    if self.name.present?
+      return self.name
+    else
+      return friendly_name
+    end
+  end
+
   def friendly_name
     self.email.split("@").first
+  end
+
+  def to_param
+    [id, full_name.parameterize].join("-")
   end
 
 end

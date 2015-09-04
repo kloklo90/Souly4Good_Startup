@@ -1,110 +1,252 @@
-<center> <h2 id="profile_header"> Your contributions in making the world a better place </h2> </center> 
+<style>
+  .container-fluid{
+    padding: 0;
+  }
+  #main_content {
+    margin-top: -20px;
+  }
+</style>
+<%= content_for :container_class do %>
+  container-fluid
+<% end %>
 
-<br>
 
-<div id="progressbar">
-    <span class="progress_widget">
+<link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/shieldui-all.min.css" />
+<link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/light/all.min.css" />
+<script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
+
+<div class="profile">
+  <div id="Top" class="container-fluid">
+
+    <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2" style="margin-bottom: 30px;">
+      <div class="circle" style="background-image: url('<%= current_user.avatar.url(:thumb) %>')"></div>
+      <div class="col-xs-4 col-md-3 col-lg-3 step" style="position: absolute;top: 136px;left: 34px;">
+        <div style="width: 190px; height: 190px; overflow: visible;">
+          <div id="progress" class="col-xs-12 col-md-4 col-lg-4" style="width: 60px; height: 60px;">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="margin-bottom: 30px;">
+      <div id="user_description">
+        <p>
+          <b><%= current_user.full_name %></b>
+        </p>
+        <br/>
+        <p><%= current_user.overview %></p>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" style="margin-bottom: 10px;">
+      <div id="medals">
+        <p><b>Badges</b></p>
+        <br/>
+        <p>In this area you will see your badges.</p>
+      </div>
+    </div>
+
+  </div>
+  <style>
+    .sui-progressbar-circular{
+      background-color: transparent;
+      overflow: visible;
+    }
+    .sui-progressbar-text{
+      top: 6px !important;
+      left: -20px !important;
+    }
+  </style>
+  <script type="text/javascript">
+    //initialization options for the progress bar
+    var progress = $("#progress").shieldProgressBar({
+      min: 0,
+      max: 100,
+      value: <%= (current_user.getProgress.current_value.to_f / current_user.getProgress.levelRange.to_f) * 100%>,
+      layout: "circular",
+      layoutOptions: {
+        circular: {
+          //borderColor: "#FF7900",
+          width: 10,
+          borderWidth: 2,
+          color: "green",
+          backgroundColor: "transparent"
+        }
+      },
+      text: {
+        enabled: true,
+        template: '<%= image_tag "badges/#{current_user.getProgress.level_key}.png" %>'
+      }
+    }).swidget();
+
+  </script>
+
+  <ul class="nav nav-tabs nav-justified">
+    <li class="active">
+      <a data-toggle="tab" href="#information">
+        <span class="glyphicon glyphicon-user"></span> My Posts
+      </a>
+    </li>
+    <li>
+      <a data-toggle="tab" href="#settings">
+        <span class="glyphicon glyphicon-cog"></span> Account Settings
+      </a>
+    </li>
+  </ul>
+
+</div>
+
+<div class="container" style="margin-top: 40px;">
+
+  <div class="tab-content">
+    <div id="information" class="tab-pane active">
+      <center> <h2 id="profile_header"> Your contributions in making the world a better place </h2> </center>
+      <h2>My Posts</h2>
+      <br/>
+
+      <div id="post-legend">
+        <a href="/users/edit?type=external" class="no-hover-style"><div class="icon external-t" data-toggle="tooltip" data-placement="bottom" title="News Articles"></div></a>
+        <a href="/users/edit?type=regular" class="no-hover-style"><div class="icon user-t" data-toggle="tooltip" data-placement="bottom" title="Community and Volunteering Posts"></div></a>
+        <a href="/users/edit?type=challenge" class="no-hover-style"><div class="icon challenge-t" data-toggle="tooltip" data-placement="bottom" title="Challenge Posts"></div></a>
+      </div>
+
+      <% if @posts.blank? %>
+      <h1>Opps there is no post, post your first one post, click here <a data-toggle="tab" href="#settings">Post now</a></h1>
+      <% end %>
+
+      <div class="ui cards" id="con">
+
+        <%= render '/posts/post_list' %>
+
+        <script>
+          $(document).ready(function(){
+            var _postmodel = new PostsModel();
+            _postmodel.init();
+          })
+        </script>
+      </div>
+
+      <div class="hide">
+        <%= paginate @posts %>
+      </div>
+
+    </div>
+
+    <div id="settings" class="tab-pane">
+      <center> <h2 id="profile_header"> Your contributions in making the world a better place </h2> </center>
+
+      <br/>
+
+
+
+      <div id="progressbar">
+        <span class="progress_widget">
           <p>Progress to Next Level:</p>
 
           <!-- Calculate Progress as a percentage -->
           <!-- levelRange is a public class method to return @@level_point -->
-          <span id="progress_level"><%= (current_user.getProgress.current_value.to_f / current_user.getProgress.levelRange.to_f) * 100%>%  </span>
-      </span>
-      
-      <span class="progress_widget">
-      <p>  Current Level: </p>
-      <!-- Using class method to return name -->
-      <span id="progress_name"><%= Level.getLevel(current_user.getProgress.level_key)%></span>
-      </span>
-</div>
+          <span id="progress_level">
+            <%= (current_user.getProgress.current_value.to_f / current_user.getProgress.levelRange.to_f) * 100%><%= "%" %> </span>
+        </span>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= devise_error_messages! %>
-
-
-  <div class="panel panel-default">
-
-    <div class="panel-body">
-  
-    <h3>The Points system</h3>
-    <br>
-
-     <h4><p>Want to take the lead and start a positive movement? We up for the challenge </p>
-    <a href="http://www.souly4good.com/posts/new">Start a Challenge (1 Point + 1/2 point everytime someone else does your challenge)</a>
-     </h4>
-
-     <br>
-
-     <h4><p>If you already do great things for people we'd love to hear from everyday heroes like you </p>
-     <a href="http://www.souly4good.com/posts/new">Share a community or volunteering initiative (3 Points)</a>
-     </h4>
-
-     <br>
-
-     <h4><p>Heard or read a nice news article </p>
-     <a href="http://www.souly4good.com/posts/new">Share the good news (1 Point)</a>
-     </h4>
-     
-     <br>
-
-    <h4>Invite Your Friends (3 Points for each invitee)</h4>
-     <a  class="btn btn-default" id="add_friend_btn">Add a friend</a>
-
-     <a  class="btn btn-default" id="submit_friend_btn">Submit</a>
-
-     <div id="friend_list"></div>
-
-     <br>
-
-     
-
-
- <div class="panel-footer">
-
-     <h3>Your login information </h3>
-
-      <div class="form-inputs">
-
-      <div class="form-group">
-        <%= f.label :name %>
-        <%= f.text_field :name, class: "form-control", :autofocus => true %>
+        <span class="progress_widget">
+          <p>  Current Level: </p>
+          <!-- Using class method to return name -->
+          <span id="progress_name"><%= Level.getLevel(current_user.getProgress.level_key)%></span>
+        </span>
       </div>
 
-      <div class="form-group">
-        <%= f.label :email %>
-        <%= f.email_field :email, class: "form-control", :autofocus => true %>
-      </div>
+      <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
+        <%= devise_error_messages! %>
 
-      <div class="form-group">
-        <%= f.label :password %> <i>(leave blank if you don't want to change it)</i>
-        <%= f.password_field :password, class: "form-control", :autocomplete => "off" %>
-      </div>
 
-      <div class="form-group">
-        <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i>
-        <%= f.password_field :current_password, class: "form-control" %>
-      </div>
+        <div class="panel panel-default">
 
-      </div>
+          <div class="panel-body">
 
-      <div class="form-group">
-        <%= f.submit "Update", class: "btn btn-primary" %>
-      </div>
+            <h3>The Points system</h3>
+            <br/>
 
-    <% end %>
+            <h4><p>Want to take the lead and start a positive movement? We up for the challenge </p>
+              <a href="http://www.souly4good.com/posts/new">Start a Challenge (1 Point + 1/2 point everytime someone else does your challenge)</a>
+            </h4>
+
+            <br/>
+
+            <h4><p>If you already do great things for people we'd love to hear from everyday heroes like you </p>
+              <a href="http://www.souly4good.com/posts/new">Share a community or volunteering initiative (3 Points)</a>
+            </h4>
+
+            <br/>
+
+            <h4><p>Heard or read a nice news article </p>
+              <a href="http://www.souly4good.com/posts/new">Share the good news (1 Point)</a>
+            </h4>
+
+            <br/>
+
+            <h4>Invite Your Friends (3 Points for each invitee)</h4>
+            <a  class="btn btn-default" id="add_friend_btn">Add a friend</a>
+
+            <a  class="btn btn-default" id="submit_friend_btn">Submit</a>
+
+            <div id="friend_list"></div>
+
+            <br/>
+
+
+
+
+            <div class="panel-footer">
+
+              <h3>Your login information </h3>
+
+              <div class="form-inputs">
+
+                <div class="form-group">
+                  <%= f.label :name %>
+                  <%= f.text_field :name, :class => "form-control" %>
+                </div>
+
+                <div class="form-group">
+                  <%= f.label :email %>
+                  <%= f.email_field :email, :class => "form-control" %>
+                </div>
+
+                <div class="form-group">
+                  <%= f.label :avatar %>
+                  <%= f.file_field :avatar, :class => "form-control" %>
+                </div>
+
+                <div class="form-group">
+                  <%= f.label :overview, "Profile Overview" %>
+                  <%= f.text_area :overview, :class => "form-control" %>
+                </div>
+
+                <div class="form-group">
+                  <%= f.label :password %> <i>(leave blank if you don't want to change it)</i>
+                  <%= f.password_field :password, :class => "form-control", :autocomplete => "off" %>
+                </div>
+
+                <div class="form-group">
+                  <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i>
+                  <%= f.password_field :current_password, :class => "form-control" %>
+                </div>
+
+              </div>
+
+              <div class="form-group">
+                <%= f.submit "Update", :class => "btn btn-primary" %>
+              </div>
+
+            <% end %>
+          </div>
+        </div>
+        <div class="panel-footer">
+          <h3>Unhappy?</h3>
+          <p>Send us an email so we can make it better at souly4good@gmail.com <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, :class => "btn btn-default" %></p>
+        </div>
+      </div>
+    </div>
   </div>
 
+
 </div>
-
-
-
-  <div class="panel-footer">
-
-    <h3>Unhappy?</h3>
-
-    <p>Send us an email so we can make it better at souly4good@gmail.com <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete, class: "btn btn-default" %></p>
-
-
-
-  </div>
-

@@ -5,22 +5,22 @@ Rails.application.routes.draw do
 
   resources :comments
 
-  devise_for :users, :controllers => { :invitations => 'users/invitations' }
+  devise_for :users, :controllers => { :invitations => 'users/invitations', :registrations => 'registrations' }
 
   devise_scope :user do
-    post 'batch_invite', to: "users/invitations#batch_invite"
+    post 'batch_invite', :to => "users/invitations#batch_invite"
   end
   
 
 
-  get "profile/:user_id" => "users#profile"
+  resources :users, :only => [:show], :path => "user"
 
   resources :posts do
     member do
-      put "like", to:    "posts#upvote"
-      put "dislike", to: "posts#downvote"
-      get "reply", to: "posts#new"
-      post "report", to: "posts#report"
+      put "like", :to => "posts#upvote"
+      put "dislike", :to => "posts#downvote"
+      get "reply", :to => "posts#new"
+      post "report", :to => "posts#report"
     end
     resources :comments
   end

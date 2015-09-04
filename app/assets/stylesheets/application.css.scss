@@ -36,6 +36,9 @@ body{
 .navbar-brand a:hover, .navbar-brand a:focus, .navbar-brand a:active{
     
 }
+.navbar-brand{
+    padding: 15px 0px;
+}
 
 #main_content {
 	#content {
@@ -91,7 +94,7 @@ $blue: rgb(97, 150, 182);
     flex-wrap: nowrap;
 
     .card{
-		width: 250px;
+		width: 295px; /* If we will increase it then the number of posts will increase. */
 		margin-bottom: 10px;
 
 		a.user{
@@ -117,10 +120,14 @@ $blue: rgb(97, 150, 182);
 		  	background-color: $blue;
 		  }
 		}
-
 		.description{
 			box-shadow: 0px 3px 0px 0px #d4d4d5, 0px 0px 0px 1px #d4d4d5;
-  			padding: 5px;
+                        .btn-group{
+                            display: inline;
+                            a{
+                                margin: 2px 2px;
+                            }
+                        }
   		}
 	}
 }

@@ -1,0 +1,109 @@
+<style>
+  .container-fluid{
+    padding: 0;
+  }
+  #main_content {
+    margin-top: -20px;
+  }
+</style>
+<%= content_for :container_class do %>
+  container-fluid
+<% end %>
+
+
+<link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/shieldui-all.min.css" />
+<link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/light/all.min.css" />
+<script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
+
+<div class="profile">
+  <div id="Top" class="container-fluid">
+
+    <div class="col-xs-12 col-sm-12 col-md-2 col-lg-2" style="margin-bottom: 30px;">
+      <div class="circle" style="background-image: url('<%= @user.avatar.url(:thumb) %>')"></div>
+      <div class="col-xs-4 col-md-3 col-lg-3 step" style="position: absolute;top: 136px;left: 34px;">
+        <div style="width: 190px; height: 190px; overflow: visible;">
+          <div id="progress" class="col-xs-12 col-md-4 col-lg-4" style="width: 60px; height: 60px;">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="margin-bottom: 30px;">
+      <div id="user_description">
+        <p>
+          <b><%= link_to @user.full_name, @user %></b>
+        </p>
+        <br/>
+        <p><%= @user.overview %></p>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" style="margin-bottom: 10px;">
+      <div id="medals">
+        <p><b>Medals</b></p>
+        <br/>
+        <p>In this area you will see your meddals.</p>
+      </div>
+    </div>
+
+  </div>
+  <style>
+    .sui-progressbar-circular{
+      background-color: transparent;
+      overflow: visible;
+    }
+    .sui-progressbar-text{
+      top: 6px !important;
+      left: -20px !important;
+    }
+  </style>
+  <script type="text/javascript">
+    //initialization options for the progress bar
+    var progress = $("#progress").shieldProgressBar({
+      min: 0,
+      max: 100,
+      value: <%= (@user.getProgress.current_value.to_f / @user.getProgress.levelRange.to_f) * 100%>,
+      layout: "circular",
+      layoutOptions: {
+        circular: {
+          //borderColor: "#FF7900",
+          width: 10,
+          borderWidth: 2,
+          color: "green",
+          backgroundColor: "transparent"
+        }
+      },
+      text: {
+        enabled: true,
+        template: '<%= image_tag "badges/#{@user.getProgress.level_key}.png" %>'
+      }
+    }).swidget();
+
+  </script>
+
+</div>
+<hr style="border: 1px solid #e5e5e6;" />
+<br/>
+<div class="container" style="margin-top: 40px;">
+
+
+  <div id="post-legend">
+    <a href="<%= user_path(@user, {:type=> 'external'}) %>" class="no-hover-style"><div class="icon external-t" data-toggle="tooltip" data-placement="bottom" title="News Articles"></div></a>
+    <a href="<%= user_path(@user, {:type=> 'regular'}) %>" class="no-hover-style"><div class="icon user-t" data-toggle="tooltip" data-placement="bottom" title="Community and Volunteering Posts"></div></a>
+    <a href="<%= user_path(@user, {:type=> 'challenge'}) %>" class="no-hover-style"><div class="icon challenge-t" data-toggle="tooltip" data-placement="bottom" title="Challenge Posts"></div></a>
+  </div>
+
+  <div class="ui cards" id="con">
+
+    <%= render 'posts/post_list' %>
+
+    <script>
+      $(document).ready(function(){
+        var _postmodel = new PostsModel();
+        _postmodel.init();
+      })
+    </script>
+  </div>
+
+  <div class="hide">
+    <%= paginate @posts %>
+  </div>
+</div>

@@ -11,7 +11,7 @@
 <body>
 	<header class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="navbar-inner">
-      <div class=" center-block">
+      <div class=" center-block1 container">
         <div id="logo" class="navbar-brand">
         <%= link_to root_path do %>
         	<%= image_tag "logo.png" %> Souly4Good
@@ -34,12 +34,12 @@
     </div>
   </header>
 
-	<div id="main_content" class="container">
+	<div id="main_content" class="<%= content_for?(:container_class) ? yield(:container_class) : 'container' %>">
 		<% flash.each do |name, msg| %>
 			<%= content_tag(:div, msg, class: "alert alert-info") %>
 		<% end %>
 
-			<div class=" center-block">
+			<div class=" center-block1">
 				<%= yield %>
 			</div>
 		</div>
