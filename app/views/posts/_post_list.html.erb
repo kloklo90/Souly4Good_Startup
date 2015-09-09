@@ -7,7 +7,8 @@
       </div>
       <% if post.title.length < 300 %>
         <a class="image" href="<%= url_for(post) %>">
-          <%= image_tag post.external_image %>
+          <%#= image_tag post.external_image %>
+          <%= image_tag default_e_image(post) %>
         </a>
       <% else %>
         <div class="content">
