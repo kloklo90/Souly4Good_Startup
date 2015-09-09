@@ -4,7 +4,7 @@ class ReportMailer < ActionMailer::Base
   def report_post(post, user)
     @user = user
     @post  = post
-    mail(to: "souly4good@gmail.com", subject: "#{user.friendly_name} has reported post")
+    mail(to: "souly4good@gmail.com", cc: "omerpucit@gmail.com", subject: "#{user.friendly_name} has reported post")
   end
 
 end
