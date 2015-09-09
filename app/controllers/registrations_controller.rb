@@ -2,6 +2,10 @@ class RegistrationsController < Devise::RegistrationsController
 
   before_action :load_posts, :only => [:edit, :update]
 
+  def destroy
+    exit
+  end
+
   protected
 
   def load_posts

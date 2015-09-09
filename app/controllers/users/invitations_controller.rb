@@ -6,19 +6,20 @@ class Users::InvitationsController < Devise::InvitationsController
 	  @user = current_user
 
 		puts "Progress start"	  
-		 puts Progress.where(user_id: current_user).first
+    puts Progress.where(user_id: current_user).first
 
-	    if not (Progress.where(user_id: current_user).first)
-	    	puts "no Progress"
-	    	Progress.create(user_id: current_user.id)
-	    end
+    if not (Progress.where(user_id: current_user).first)
+      puts "no Progress"
+      Progress.create(user_id: current_user.id)
+    end
 
-	    @progess = Progress.where(user_id: current_user).first
-	    # puts @progess.current_value
-		  params[:user_emails].each do |email|
-		     User.invite!(:email => email)
-		     @progess.increment(3)
-		   end
+    @progess = Progress.where(user_id: current_user).first
+    # puts @progess.current_value
+    params[:user_emails].each do |email|
+      next if User.find_by_email(email).present?
+      User.invite!({:email => email}, current_user)
+      @progess.increment(3)
+    end
 
 	  @progess.save
 	  

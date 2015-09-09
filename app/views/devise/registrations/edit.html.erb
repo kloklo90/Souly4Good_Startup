@@ -109,7 +109,7 @@
       </div>
 
       <% if @posts.blank? %>
-      <h1>Opps there is no post, post your first one post, click here <a data-toggle="tab" href="#settings">Post now</a></h1>
+        <h1>Opps there is no post, post your first one post, click here <a data-toggle="tab" href="#settings">Post now</a></h1>
       <% end %>
 
       <div class="ui cards" id="con">
@@ -154,13 +154,12 @@
         </span>
       </div>
 
-      <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
-        <%= devise_error_messages! %>
+      <div class="panel panel-default">
 
+        <div class="panel-body">
 
-        <div class="panel panel-default">
-
-          <div class="panel-body">
+          <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
+            <%= devise_error_messages! %>
 
             <h3>The Points system</h3>
             <br/>
@@ -236,9 +235,8 @@
               <div class="form-group">
                 <%= f.submit "Update", :class => "btn btn-primary" %>
               </div>
-
-            <% end %>
-          </div>
+            </div>
+          <% end %>
         </div>
         <div class="panel-footer">
           <h3>Unhappy?</h3>
