@@ -2,11 +2,15 @@ class RegistrationsController < Devise::RegistrationsController
 
   before_action :load_posts, :only => [:edit, :update]
 
-  def destroy
-    exit
-  end
-
   protected
+
+  def update_resource(resource, params)
+    if params.present? and params.to_a.count == 1 and params[:avatar].present?
+      resource.update_without_password(params)
+    else
+      super
+    end
+  end
 
   def load_posts
     limit = params[:page] || 1
