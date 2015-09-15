@@ -7,11 +7,11 @@
       <%= link_to @post.url, @post.url %>
     </p>
     <p>
-      <% if @post.external %>
-        <%= image_tag @post.external_image, style: "max-width: 450px" %>
-      <% else %>
-        <%= image_tag @post.image, width: "450" %>
-      <% end %>
+      <% #if @post.external %>
+        <%= image_tag default_e_image(@post), style: "max-width: 450px" %>
+      <%# else %>
+        <%#= image_tag @post.image, width: "450" %>
+      <%# end %>
     </p>
     <% if @post.user.present? %>
       <small>Submitted by <%= @post.user.name %></small>
