@@ -1,76 +1,88 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>Souly4Good</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
-  <link rel="shortcut icon" href="<%= image_url "fav.ico" %>">
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-	<header class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <head>
+    <title>Souly4Good</title>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <link href='http://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+    <link rel="shortcut icon" href="<%= image_url "fav.ico" %>">
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+  <header class="navbar navbar-default navbar-fixed-top" role="navigation">
     <div class="navbar-inner">
       <div class=" center-block1 container">
         <div id="logo" class="navbar-brand">
-        <%= link_to root_path do %>
-        	<%= image_tag "logo.png" %> Souly4Good
-        <% end %></div>
+          <%= link_to root_path do %>
+            <%= image_tag "logo.png" %> Souly4Good
+          <% end %></div>
         <nav class="collapse navbar-collapse navbar-ex1-collapse">
-        	<% if user_signed_in? -%>
-						<ul class="nav navbar-nav navbar-right">
-							<li><%= link_to 'Submit Post', new_post_path %></li>
-							<li><%= link_to 'Account', edit_user_registration_path %></li>
-							<li><%= link_to 'Sign out', destroy_user_session_path, :method => :delete %></li>
-						</ul>
-					<% else -%>
-						<ul class="nav navbar-nav pull-right">
-							<li><%= link_to 'Sign up', new_user_registration_path %></li>
-							<li><%= link_to 'Sign in', new_user_session_path %></li>
-						</ul>
-					<% end -%>
+          <% if user_signed_in? -%>
+            <ul class="nav navbar-nav navbar-right">
+              <li><%= link_to 'Submit Post', new_post_path %></li>
+              <li><%= link_to 'Account', edit_user_registration_path %></li>
+              <li><%= link_to 'Sign out', destroy_user_session_path, :method => :delete %></li>
+            </ul>
+          <% else -%>
+            <style type="text/css">
+              .tappie {
+                position: absolute;
+                top: -10px;
+                right: 20px;
+              }
+            </style>
+            <ul class="nav navbar-nav pull-right">
+              <li>
+                <%= link_to 'Sign up', new_user_registration_path %>
+                <div class="tappie">
+                  <%= link_to image_tag("tappie_1.gif"), new_user_registration_path %>
+                </div>
+              </li>
+              <li><%= link_to 'Sign in', new_user_session_path %></li>
+            </ul>
+          <% end -%>
         </nav>
       </div>
     </div>
   </header>
 
-	<div id="main_content" class="<%= content_for?(:container_class) ? yield(:container_class) : 'container' %>">
-		<% flash.each do |name, msg| %>
-			<%= content_tag(:div, msg, class: "alert alert-info") %>
-		<% end %>
+  <div id="main_content" class="<%= content_for?(:container_class) ? yield(:container_class) : 'container' %>">
+    <% flash.each do |name, msg| %>
+      <%= content_tag(:div, msg, class: "alert alert-info") %>
+      <% end %>
 
-			<div class=" center-block1">
-				<%= yield %>
-			</div>
-		</div>
-	</div>
-</body>
+      <div class=" center-block1">
+        <%= yield %>
+      </div>
+    </div>
+  </div>
+  </body>
 
-<!-- Khady's Google Analytics -->
+  <!-- Khady's Google Analytics -->
 
-<script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-  ga('create', 'UA-65747518-1', 'auto');
-  ga('send', 'pageview');
+    ga('create', 'UA-65747518-1', 'auto');
+    ga('send', 'pageview');
 
-</script>
+  </script>
 
-<!-- Google Analytics -->
-<script>
- (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
- (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
- m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
- })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  <!-- Google Analytics -->
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
- ga('create', 'UA-63904512-1', 'auto');
- ga('send', 'pageview');
+    ga('create', 'UA-63904512-1', 'auto');
+    ga('send', 'pageview');
 
-</script>
+  </script>
 
-<!-- Heatmap -->
-<!--script type="text/javascript"> (function() { var hm = document.createElement('script'); hm.type ='text/javascript'; hm.async = true; hm.src = ('++u-heatmap-it+log-js').replace(/[+]/g,'/').replace(/-/g,'.'); var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(hm, s); })(); </script-->
-</html>
+  <!-- Heatmap -->
+  <!--script type="text/javascript"> (function() { var hm = document.createElement('script'); hm.type ='text/javascript'; hm.async = true; hm.src = ('++u-heatmap-it+log-js').replace(/[+]/g,'/').replace(/-/g,'.'); var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(hm, s); })(); </script-->
+  </html>

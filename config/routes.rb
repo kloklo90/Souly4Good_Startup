@@ -15,6 +15,9 @@ Rails.application.routes.draw do
 
   resources :users, :only => [:show], :path => "user"
 
+  post "/user/:id/like", :to => "users#like", :as => :user_like
+  post "/user/:id/staff-picked", :to => "users#staff_picked", :as => :staff_picked
+
   resources :posts do
     member do
       put "like", :to => "posts#upvote"

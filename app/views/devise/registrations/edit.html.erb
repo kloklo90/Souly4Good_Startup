@@ -66,16 +66,15 @@
     cursor: pointer;
     z-index: 999999999;
   }
-
+  .uploadFile .field_with_errors{
+    opacity: 0;
+  }
 </style>
 <%= content_for :container_class do %>
   container-fluid
 <% end %>
 
-
-<link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/shieldui-all.min.css" />
-<link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/light/all.min.css" />
-<script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
+<%= stylesheet_link_tag "sheild_all.min" %>
 
 <div class="profile">
   <div id="Top" class="container-fluid">
@@ -89,9 +88,9 @@
           </div>
         <% end %>
       </div>
-      <div class="col-xs-4 col-md-3 col-lg-3 step" style="position: absolute;top: 136px;left: 34px;">
-        <div style="width: 190px; height: 190px; overflow: visible;">
-          <div id="progress" class="col-xs-12 col-md-4 col-lg-4" style="width: 60px; height: 60px;">
+      <div class="col-xs-4 col-md-3 col-lg-3 step" style="position: absolute;top: 136px;left: 34px;" data-turbolinks-temporary>
+        <div style="width: 190px; height: 190px; overflow: visible;" data-turbolinks-temporary>
+          <div id="progress" class="col-xs-12 col-md-4 col-lg-4" style="width: 60px; height: 60px;" data-turbolinks-temporary>
           </div>
         </div>
       </div>
@@ -109,7 +108,15 @@
       <div id="medals">
         <p><b>Badges</b></p>
         <br/>
-        <p>In this area you will see your badges.</p>
+
+        <!-- Slides Container -->
+        <ul class="list list-inline">
+          <% current_user.user_badges.each do |user_badge| %>
+            <li>
+              <button type="button" class="btn btn-sm btn-primary">Badge <span class="badge"><%= user_badge.badge_id %></span></button>
+            </li>
+          <% end %>
+        </ul>
       </div>
     </div>
 
@@ -124,14 +131,13 @@
       left: -39px !important;
     }
   </style>
-  <script type="text/javascript">
+  <script type="text/javascript" data-turbolinks-eval=always>
 
     $('body').on('change','#bgphotoimg', function()
     {
       $("#bgimageform").submit();
     });
 
-    //initialization options for the progress bar
     var progress = $("#progress").shieldProgressBar({
       min: 0,
       max: 100,
@@ -148,19 +154,19 @@
       },
       text: {
         enabled: true,
-        template: '<%= image_tag "badges/#{current_user.getProgress.level_key}.png" %>'
+        template: '<%= image_tag "badges/#{current_user.getProgress.level_key}.png?srand=#{Time.now.to_i}" %>'
       }
     }).swidget();
-
+    
   </script>
 
   <ul class="nav nav-tabs nav-justified">
-    <li class="active">
+    <li class="<%= 'active ' if resource.errors.blank? %>">
       <a data-toggle="tab" href="#information">
         <span class="glyphicon glyphicon-user"></span> My Posts
       </a>
     </li>
-    <li>
+    <li class="<%= 'active ' if resource.errors.present? %>">
       <a data-toggle="tab" href="#settings">
         <span class="glyphicon glyphicon-cog"></span> Account Settings
       </a>
@@ -172,7 +178,7 @@
 <div class="container" style="margin-top: 40px;">
 
   <div class="tab-content">
-    <div id="information" class="tab-pane active">
+    <div id="information" class="tab-pane <%= 'active ' if resource.errors.blank? %>">
       <center> <h2 id="profile_header"> Your contributions in making the world a better place </h2> </center>
       <h2>My Posts</h2>
       <br/>
@@ -205,7 +211,7 @@
 
     </div>
 
-    <div id="settings" class="tab-pane">
+    <div id="settings" class="tab-pane <%= 'active ' if resource.errors.present? %>">
       <center> <h2 id="profile_header"> Your contributions in making the world a better place </h2> </center>
 
       <br/>

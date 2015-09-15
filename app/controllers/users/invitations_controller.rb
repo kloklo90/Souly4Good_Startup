@@ -19,6 +19,10 @@ class Users::InvitationsController < Devise::InvitationsController
       next if User.find_by_email(email).present?
       User.invite!({:email => email}, current_user)
       @progess.increment(3)
+      current_user.increment_invitations!
+      if current_user.invitations_count >= 1000
+        current_user.user_badges.create(:badge_id => 16) if current_user.user_badges.where(:badge_id => 16).first.blank?
+      end
     end
 
 	  @progess.save

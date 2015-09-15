@@ -10,10 +10,7 @@
   container-fluid
 <% end %>
 
-
-<link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/shieldui-all.min.css" />
-<link rel="stylesheet" type="text/css" href="http://www.shieldui.com/shared/components/latest/css/light/all.min.css" />
-<script type="text/javascript" src="http://www.shieldui.com/shared/components/latest/js/shieldui-all.min.js"></script>
+  <%= stylesheet_link_tag "sheild_all.min" %>
 
 <div class="profile">
   <div id="Top" class="container-fluid">
@@ -25,6 +22,13 @@
           <div id="progress" class="col-xs-12 col-md-4 col-lg-4" style="width: 60px; height: 60px;">
           </div>
         </div>
+      </div>
+      <div data-toggle="tooltip" data-placement="bottom" title="<%= (current_user.voted_up_on?(@user))? 'You Liked Me' : 'Like Me' %>" class="" style="position: absolute;top: 138px;left: 170px;">
+        <% if current_user.voted_up_on? @user %>
+          <%= link_to "+ #{@user.votes_for.up.by_type(User).count}", user_like_path(@user), :class => "btn btn-primary", :method => :post %>
+        <% else %>
+          <%= link_to "+ #{@user.votes_for.up.by_type(User).count}", user_like_path(@user), :class => "btn btn-primary", :method => :post %>
+        <% end %>
       </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6" style="margin-bottom: 30px;">
@@ -38,9 +42,15 @@
     </div>
     <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4" style="margin-bottom: 10px;">
       <div id="medals">
-        <p><b>Medals</b></p>
+        <p><b>Badges</b></p>
         <br/>
-        <p>In this area you will see your meddals.</p>
+        <ul class="list list-inline">
+          <% @user.user_badges.each do |user_badge| %>
+            <li>
+              <button type="button" class="btn btn-sm btn-primary">Badge <span class="badge"><%= user_badge.badge_id %></span></button>
+            </li>
+          <% end %>
+        </ul>
       </div>
     </div>
 
@@ -55,7 +65,7 @@
           left: -39px !important;
     }
   </style>
-  <script type="text/javascript">
+  <script type="text/javascript" data-turbolinks-eval=always>
     //initialization options for the progress bar
     var progress = $("#progress").shieldProgressBar({
       min: 0,
@@ -73,7 +83,7 @@
       },
       text: {
         enabled: true,
-        template: '<%= image_tag "badges/#{@user.getProgress.level_key}.png" %>'
+        template: '<%= image_tag "badges/#{@user.getProgress.level_key}.png?srand=#{Time.now.to_i}" %>'
       }
     }).swidget();
 

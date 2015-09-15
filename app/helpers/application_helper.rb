@@ -4,19 +4,19 @@ module ApplicationHelper
     if post.image.present?
       return post.image
     else
-      rand_n = rand(1..6)
+      rand_n = rand(1..5)
       case rand_n
-      when 1
+      when 60
         return 'crane-default.jpg'
-      when 2
+      when 1
         return 'purple.jpg'
-      when 3
+      when 2
         return 'pink.jpg'
-      when 4
+      when 3
         return 'orange.jpg'
-      when 5
+      when 4
         return 'green.jpg'
-      when 6
+      when 5
         return 'blue.jpg'
       end
     end
@@ -26,19 +26,19 @@ module ApplicationHelper
     if post.external_image_url.present?
       return post.external_image_url
     else
-      rand_n = rand(1..6)
+      rand_n = rand(1..5)
       case rand_n
-      when 1
+      when 60
         return 'crane-default.jpg'
-      when 2
+      when 1
         return 'purple.jpg'
-      when 3
+      when 2
         return 'pink.jpg'
-      when 4
+      when 3
         return 'orange.jpg'
-      when 5
+      when 4
         return 'green.jpg'
-      when 6
+      when 5
         return 'blue.jpg'
       end
     end

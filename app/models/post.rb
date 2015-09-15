@@ -10,10 +10,27 @@ class Post < ActiveRecord::Base
 
 	validates :title, presence: true
 
+  after_create :assign_badge
+
 	paginates_per 8
 
 	def external_image
 		external_image_url || image
 	end
+
+  def challenge?
+    !!(self.post_type == PTYPE[:challenge])
+  end
+
+  protected
+
+  def assign_badge
+    if self.user.posts.present? and self.user.posts.count >= 1
+      self.user.user_badges.create(:badge_id => 2) if self.user.user_badges.where(:badge_id => 2).first.blank?
+      if self.user.posts.count >= 1000
+        self.user.user_badges.create(:badge_id => 15) if self.user.user_badges.where(:badge_id => 15).first.blank?
+      end
+    end
+  end
 
 end

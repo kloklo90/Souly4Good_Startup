@@ -43,19 +43,33 @@ class PostsController < ApplicationController
   def create
     @post = current_user.posts.build(post_params)
     @post.admin = true if current_user.admin?
-
-    @progess = Progress.where(user_id: current_user).first
-
-    if not (@progess)
-      Progress.create(user_id: current_user.id)
-      @progess = Progress.where(user_id: current_user).first
-    end
-
-    @progess.increment(Progress.get_progress_val(post_params[:post_type]))
-    @progess.save
-
     respond_to do |format|
       if @post.save
+
+        # current user progress
+        @progess = Progress.where(user_id: current_user).first
+
+        if not (@progess)
+          Progress.create(user_id: current_user.id)
+          @progess = Progress.where(user_id: current_user).first
+        end
+
+        @progess.increment(Progress.get_progress_val(post_params[:post_type]))
+        @progess.save
+
+        if @post.parent.present? and @post.parent.challenge? and @post.parent.user.id != current_user.id
+          #Challenger poster progress 1 / 2
+          # current user progress
+          progess = Progress.where(user_id: @post.parent.user.id).first
+
+          if not (progess)
+            progess =  Progress.create(user_id: @post.parent.user.id)
+          end
+
+          progess.increment( ( 1.to_f / 2.to_f ).to_f )
+          progess.save
+        end
+
         format.html { redirect_to @post, notice: 'Post was successfully created.' }
         format.json { render :show, status: :created, location: @post }
       else
@@ -106,6 +120,9 @@ class PostsController < ApplicationController
   def upvote
     @post = Post.find(params[:id])
     @post.upvote_by current_user
+    if current_user.votes.up.by_type(Post).count >= 1
+      current_user.user_badges.create(:badge_id => 3) if current_user.user_badges.where(:badge_id => 3).first.blank?
+    end
     if request.xhr?
       respond_to do |format|
         format.js

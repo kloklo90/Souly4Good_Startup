@@ -40,34 +40,39 @@
         <div class="btn-group">
           <%= link_to 'Edit', edit_post_path(@post), class: "btn btn-default" %>
           <%# if current_user.admin? or @post.user == current_user %>
-            <%= link_to 'Destroy', @post, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default" %>
-            <%# end %>
-              <% if @post.post_type == Post::PTYPE[:challenge] %>
-                <%= link_to "Reply Challenge", reply_post_path(@post), class: "btn btn-default" %>
-                <% end %>
-              </div>
+            <%= link_to 'Destroy', @post, :method => :delete, :data => { :confirm => 'Are you sure?' }, :class => "btn btn-default" %>
+          <%# end %>
+            <% if @post.post_type == Post::PTYPE[:challenge] %>
+              <%= link_to "Reply Challenge", reply_post_path(@post), :class => "btn btn-default" %>
+            <% end %>
+            <% if ( current_user and current_user.admin? ) and ( @post.user.present? and @post.user.user_badges.where(:badge_id => 13).first.blank? ) %>
+              <%= link_to "Assign Staff picked Badge", staff_picked_path(@post.user), :class => "btn btn-default", :method => :post %>
+            <% elsif ( current_user and current_user.admin? ) and ( @post.user.present? and @post.user.user_badges.where(:badge_id => 13).first.present? ) %>
+              <%= link_to "Staff picked Badge Assigned", "javascript:;", :class => "btn btn-primary" %>
+            <% end %>
+          </div>
+        <% end %>
+
+        <h3 class="comments_title">
+          <%= @post.comments.count %> Comments
+        </h3>
+
+        <div id="comments">
+          <%= render :partial => @post.comments %>
+        </div>
+        <%= simple_form_for [@post, Comment.new]  do |f| %>
+          <div class="field">
+            <%= f.text_area :body, class: "form-control" %>
+            </div>
+            <br>
+            <%= f.submit "Add Comment", class: "btn btn-primary" %>
             <% end %>
 
-            <h3 class="comments_title">
-              <%= @post.comments.count %> Comments
-            </h3>
-
-            <div id="comments">
-              <%= render :partial => @post.comments %>
-            </div>
-            <%= simple_form_for [@post, Comment.new]  do |f| %>
-              <div class="field">
-                <%= f.text_area :body, class: "form-control" %>
-                </div>
-                <br>
-                <%= f.submit "Add Comment", class: "btn btn-primary" %>
+            <% if not @post.replies.empty? %>
+              <h2>Challenge Replies</h2>
+              <% @post.replies.each do |reply| %>
+                <%= link_to reply do %>
+                  Reply by <%= reply.user.name %> <%= time_ago_in_words(reply.created_at) %> ago <br />
                 <% end %>
-
-                <% if not @post.replies.empty? %>
-                  <h2>Challenge Replies</h2>
-                  <% @post.replies.each do |reply| %>
-                    <%= link_to reply do %>
-                      Reply by <%= reply.user.name %> <%= time_ago_in_words(reply.created_at) %> ago <br />
-                    <% end %>
-                  <% end %>
-                <% end %>
+              <% end %>
+            <% end %>
