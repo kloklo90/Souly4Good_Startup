@@ -120,7 +120,7 @@ class PostsController < ApplicationController
   def upvote
     @post = Post.find(params[:id])
     @post.upvote_by current_user
-    if current_user.votes.up.by_type(Post).count >= 1
+    if current_user.votes.up.for_type(Post).count >= 1
       current_user.user_badges.create(:badge_id => 3) if current_user.user_badges.where(:badge_id => 3).first.blank?
     end
     if request.xhr?

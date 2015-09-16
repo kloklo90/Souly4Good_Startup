@@ -26,7 +26,7 @@ class UsersController < ApplicationController
       @user.upvote_by current_user
     end
 
-    if current_user.votes.up.by_type(User).count >= 1000
+    if current_user.votes.up.for_type(User).count >= 1000
       current_user.user_badges.create(:badge_id => 14) if current_user.user_badges.where(:badge_id => 14).first.blank?
     end
     if request.xhr?

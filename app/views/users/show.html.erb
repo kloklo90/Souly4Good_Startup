@@ -25,9 +25,9 @@
       </div>
       <div data-toggle="tooltip" data-placement="bottom" title="<%= (current_user.voted_up_on?(@user))? 'You Liked Me' : 'Like Me' %>" class="" style="position: absolute;top: 138px;left: 170px;">
         <% if current_user.voted_up_on? @user %>
-          <%= link_to "+ #{@user.votes_for.up.by_type(User).count}", user_like_path(@user), :class => "btn btn-primary", :method => :post %>
+          <%= link_to "+ #{@user.votes_for.up.for_type(User).count}", user_like_path(@user), :class => "btn btn-primary", :method => :post %>
         <% else %>
-          <%= link_to "+ #{@user.votes_for.up.by_type(User).count}", user_like_path(@user), :class => "btn btn-primary", :method => :post %>
+          <%= link_to "+ #{@user.votes_for.up.for_type(User).count}", user_like_path(@user), :class => "btn btn-primary", :method => :post %>
         <% end %>
       </div>
     </div>
