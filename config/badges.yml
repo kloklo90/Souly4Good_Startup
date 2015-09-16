@@ -42,37 +42,37 @@ production:
   badges:
   - id: 4
     comment: "Most invites on the platform (the person with the most successful invites)"
-    minimum_limit: 16
+    minimum_limit: 1
     daily_limit: 1
   - id: 5
     comment: "Most likes (the person who gave out the most likes)"
-    minimum_limit: 16
+    minimum_limit: 1
     daily_limit: 1
   - id: 6
     comment: "Most liked  ( the person with the most likes on all their posts)"
-    minimum_limit: 16
+    minimum_limit: 1
     daily_limit: 1
   - id: 7
     comment: "Most comments (the person who wrote the most comments)"
-    minimum_limit: 16
+    minimum_limit: 1
     daily_limit: 1
   - id: 8
     comment: "Most challenges and volunteer posts (the person who submitted the most challenge posts)"
-    minimum_limit: 16
+    minimum_limit: 1
     daily_limit: 1
   - id: 9
     comment: "Most community posts (the person who submitted the most community posts)"
-    minimum_limit: 16
+    minimum_limit: 1
     daily_limit: 1
   - id: 10
     comment: "Most news articles posts (the person who submitted the most news articles posts)"
-    minimum_limit: 16
+    minimum_limit: 1
     daily_limit: 1
   - id: 11
     comment: "Most sensational post (most liked and most commented on post combination)"
-    minimum_limit: 16
+    minimum_limit: 1
     daily_limit: 1
   - id: 12
     comment: "Most positive user (voted by the people on the platform need to add button on user public page)"
-    minimum_limit: 16
+    minimum_limit: 1
     daily_limit: 1
